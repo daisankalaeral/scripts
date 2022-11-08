@@ -28,7 +28,7 @@ python remove_unqualified.py -i state.json
 ### stat.py
 Thống kê các file đạt yêu cầu.
 ```
-python -i state.json -o output.csv
+python stat.py -i state.json -o output.csv
 ```
 |MSV       |Samples|Seconds           |Hours   |CER                |
 |----------|-------|------------------|--------|-------------------|

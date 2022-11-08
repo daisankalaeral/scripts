@@ -21,6 +21,8 @@ def copy_file(sv, src_path, output_dir, mark):
     if os.path.isfile(src_path) and os.path.isfile(txt_dest_path):
         shutil.copy(src_path, dest_path)
         shutil.copy(txt_src_path, txt_dest_path)
+    else:
+        print(f"Can't find {src_path} or {txt_src_path}")
 
 def main():
     parser = argparse.ArgumentParser(usage = "Kill me")
