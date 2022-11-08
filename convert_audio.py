@@ -2,6 +2,7 @@ import json
 import os
 import subprocess
 import argparse
+from tqdm import tqdm
 
 def convert(file_path):
     if not os.path.isfile(file_path):
@@ -28,7 +29,7 @@ def main():
     with open(json_path, 'r', encoding='utf-8') as file:
         json_data = json.loads(file.read())
 
-    for msv in json_data['id']:
+    for msv in tqdm(json_data['id']):
         for file in json_data['id'][msv]:
             if json_data['id'][msv][file]['accepted']:
                 file_path = json_data['id'][msv][file]['path']

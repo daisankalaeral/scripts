@@ -1,6 +1,10 @@
 import json
 import pandas as pd
 import argparse
+import os
+import re
+
+pattern = "\[\d[a-zA-Z][\doO][a-zA-Z][a-zA-Z0]"
 
 def sec2hhmmss(sec, round = False):
     hours = 0
@@ -37,19 +41,21 @@ def main():
         total_samp = 0
         total_duration = 0
         for file, file_val in msv_val.items():
-            if file_val['accepted']:
+            if file_val['accepted'] and os.path.isfile(file_val['path']) and file_val['ref_text'].strip() and re.search(pattern, file_val['ref_text'].strip()):
                 total_duration += file_val['duration']
                 total_dist += file_val['distance']
                 total_len += file_val['length']
                 total_samp += 1
+        
         id.append(msv)
         samples.append(total_samp)
         duration_in_sec.append(total_duration)
         duration_in_hhmmss.append(sec2hhmmss(total_duration))
-        average_cer.append((total_dist/total_len)*100)
+        average_cer.append((total_dist/total_len)*100 if total_len else "?")
 
     df = pd.DataFrame({'MSV': id, 'Samples': samples,'Seconds': duration_in_sec, 'Hours': duration_in_hhmmss, "CER": average_cer})
     df.to_csv(args.output, index = False)
+    print(f"Total samples: {sum(samples)}\nSeconds: {sum(duration_in_sec)}\nHours: {sec2hhmmss(sum(duration_in_sec))}")
     # df.to_excel(, index =False)
 
 if __name__ == '__main__':
