@@ -18,7 +18,7 @@ def copy_file(sv, src_path, output_dir, mark):
     dest_path = f'{dest_dir}/{src_name}'
     txt_dest_path = f'{dest_dir}/{txt_src_name}'
 
-    if os.path.isfile(src_path) and os.path.isfile(txt_dest_path):
+    if os.path.isfile(src_path) and os.path.isfile(txt_src_path):
         shutil.copy(src_path, dest_path)
         shutil.copy(txt_src_path, txt_dest_path)
     else:
